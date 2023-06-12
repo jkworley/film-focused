@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Viga-Regular";
+    src: url("./assets/Viga-Regular.ttf") format("truetype");
+}
+
+html body {
+    background-color: #1d1d1d;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
