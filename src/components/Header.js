@@ -1,4 +1,4 @@
-
+// Images
 import icon from "../assets/icon.png";
 
 const Header = () => {
@@ -11,7 +11,7 @@ const Header = () => {
                 </div>
                 <div>
                     <nav style={{ fontFamily: 'Viga-Regular' }}>
-                        <ul className="uppercase flex me-4">
+                        <ul className="uppercase text-xl flex me-4">
                             <li className="p-4">Home</li>
                             <li className="p-4">Collection</li>
                             <li className="p-4">Watchlist</li>

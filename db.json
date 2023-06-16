@@ -1,0 +1,158 @@
+{
+    "movies": [
+        {
+            "id": 1,
+            "dateAdded": "2023-06-15",
+            "title": "Sorry to Bother You",
+            "rating": "R",
+            "release": "2018-07-06",
+            "genres": {
+                "genre1": "Fantasy",
+                "genre2": "Science Fiction",
+                "genre3": "Comedy"
+            },
+            "runtime": 112,
+            "poster": "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/peTl1V04E9ppvhgvNmSX0r2ALqO.jpg",
+            "synopsis": "In an alternate present-day version of Oakland, black telemarketer Cassius Green discovers a magical key to professional success – which propels him into a macabre universe.",
+            "writer": "Boots Riley",
+            "director": "Boots Riley",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        },
+        {
+            "id": 2,
+            "dateAdded": "2023-06-15",
+            "title": "Reality",
+            "rating": "R",
+            "release": "2023-05-16",
+            "genres": {
+                "genre1": "Drama",
+                "genre2": "",
+                "genre3": ""
+            },
+            "runtime": 83,
+            "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/4rS1rcaeIJd2zdTn2G8RMfTNeiV.jpg",
+            "synopsis": "On June 3, 2017, 25-year-old Reality Winner returns from running errands to find two FBI agents at her home in Augusta, Georgia. An Air Force veteran and yoga instructor, Winner spends the next two hours being questioned about her work as an intelligence contractor — specifically, whether she leaked a classified document about Russian interference in the 2016 U.S. elections.",
+            "writer": "Tina Satter, James Paul Dallas",
+            "director": "Tina Satter",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        },
+        {
+            "id": 3,
+            "dateAdded": "2023-06-15",
+            "title": "Sick of Myself",
+            "rating": "NR",
+            "release": "2023-04-12",
+            "genres": {
+                "genre1": "Comedy",
+                "genre2": "Drama",
+                "genre3": "Horror"
+            },
+            "runtime": 97,
+            "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/ynePU5z7JFn2Gf82RmfZgV84H8X.jpg",
+            "synopsis": "Signe and Thomas are in an unhealthy, competitive relationship that takes a vicious turn when Thomas suddenly breaks through as a contemporary artist. In response, Signe makes a desperate attempt to regain her status by creating a new persona hell-bent on attracting attention and sympathy.",
+            "writer": "Kristoffer Borgli",
+            "director": "Kristoffer Borgli",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        },
+        {
+            "id": 4,
+            "dateAdded": "2023-06-15",
+            "title": "Portrait of a Lady on Fire",
+            "rating": "R",
+            "release": "2019-12-06",
+            "genres": {
+                "genre1": "Drama",
+                "genre2": "Romance",
+                "genre3": ""
+            },
+            "runtime": 120,
+            "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/2LquGwEhbg3soxSCs9VNyh5VJd9.jpg",
+            "synopsis": "On an isolated island in Brittany at the end of the eighteenth century, a female painter is obliged to paint a wedding portrait of a young woman.",
+            "writer": "Céline Sciamma",
+            "director": "Céline Sciamma",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        },
+        {
+            "id": 5,
+            "dateAdded": "2023-06-15",
+            "title": "Past Lives",
+            "rating": "PG-13",
+            "release": "2018-07-06",
+            "genres": {
+                "genre1": "Drama",
+                "genre2": "Romance",
+                "genre3": ""
+            },
+            "runtime": 106,
+            "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/gXt3eVpaBq6q9SaLDrgSnzsUyIl.jpg",
+            "synopsis": "Nora and Hae Sung, two deeply connected childhood friends, are wrest apart after Nora’s family emigrates from South Korea. Two decades later, they are reunited in New York for one fateful week as they confront notions of destiny, love, and the choices that make a life.",
+            "writer": "Celine Song",
+            "director": "Celine Song",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        },
+        {
+            "id": 6,
+            "dateAdded": "2023-06-15",
+            "title": "The Artifice Girl",
+            "rating": "NR",
+            "release": "2023-04-27",
+            "genres": {
+                "genre1": "Science Fiction",
+                "genre2": "Thriller",
+                "genre3": "Mystery"
+            },
+            "runtime": 93,
+            "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/4jZdaMK8lFDb6mjk8sSAyAigxju.jpg",
+            "synopsis": "A team of special agents discovers a revolutionary new computer program to bait and trap online predators. After teaming up with the program's troubled developer, they soon find that the AI is rapidly advancing beyond its original purpose.",
+            "writer": "Franklin Ritch",
+            "director": "Franklin Ritch",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        },
+        {
+            "id": 7,
+            "dateAdded": "2023-06-15",
+            "title": "Leonor Will Never Die",
+            "rating": "PG-13",
+            "release": "2022-11-25",
+            "genres": {
+                "genre1": "Fantasy",
+                "genre2": "Comedy",
+                "genre3": "Action"
+            },
+            "runtime": 112,
+            "poster": "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/1RhMTthNne58E2P0moPWZcJjpkC.jpg",
+            "synopsis": "Fiction and reality blur when Leonor, a retired filmmaker, falls into a coma after a television lands on her head, compelling her to become the action hero of her unfinished screenplay.",
+            "writer": "Martika Ramirez Escobar",
+            "director": "Martika Ramirez Escobar",
+            "watched": "",
+            "myReview": "",
+            "myRating": null,
+            "watchlist": true,
+            "collection": true
+        }
+    ]
+}
