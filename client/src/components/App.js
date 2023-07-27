@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
 function App() {
-  // Code goes here!
+  const [ user, setUser ] = useState(null)
+
+  console.log(user)
+
 }
 
 export default App;
