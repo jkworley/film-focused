@@ -43,6 +43,16 @@ class Users(Resource):
 api.add_resource(Users, '/users')
 
 class UsersById(Resource):
+    def get(self, id):
+        user_by_id = User.query.filter(User.id == id).first()
+
+        response = make_response(
+            jsonify(user_by_id.to_dict()),
+            200
+        )
+
+        return response
+        
     def delete(self, id):
         individual_user = User.query.filer(User.id == id).first()
 
@@ -61,7 +71,7 @@ api.add_resource(UsersById, '/users/<int:id>')
 
 class Slates(Resource):
     def get(self):
-        slates_list = [slate.to_dict() for slate in Slate.query.all()]
+        slates_list = [slate.to_dict(rules = ('-slated_movies.id', '-slated_movies.movie_id', '-slated_movies.slate_id')) for slate in Slate.query.all()]
 
         response = make_response(
             jsonify(slates_list),
@@ -129,7 +139,7 @@ api.add_resource(SlateById, '/slates/<int:id>')
 
 class SlatedMovies(Resource):
     def get(self):
-        slated_movies_list = [slated_movie.to_dict() for slated_movie in SlatedMovie.query.all()]
+        slated_movies_list = [slated_movie.to_dict(rules = ('-movie_details.id', '-slate.id')) for slated_movie in SlatedMovie.query.all()]
 
         response = make_response(
             jsonify(slated_movies_list),
@@ -171,7 +181,7 @@ api.add_resource(SlatedMovies, '/slated_movies')
 
 class Movies(Resource):
     def get(self):
-        movies_list = [movie.to_dict() for movie in Movie.query.all()]
+        movies_list = [movie.to_dict(rules = ('-slated_movie.movie_id', '-slated_movie.slate_id', '-slated_movie.id', '-slated_movie.slate.user')) for movie in Movie.query.all()]
 
         response = make_response(
             jsonify(movies_list),
@@ -212,7 +222,7 @@ class Movies(Resource):
 api.add_resource(Movies, '/movies')
 
 class CheckSession(Resource):
-    def check_session():
+    def get(self):
         current_session = session.get('user.id')
 
         if current_session:
@@ -233,21 +243,22 @@ class CheckSession(Resource):
 api.add_resource(CheckSession, '/check_session')
 
 class Login(Resource):
-    def login():
+    def post(self):
         username = request.get_json()['username']
+        password = request.get_json()['password']
 
-        user_row = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username == username).first()
 
-        if user_row:
-            session['user_id'] = user_row.id
+        if user.authenticate(password):
+            session['user_id'] = user.id
 
             response = make_response(
-                jsonify(user_row.to_dict()), 201
+                jsonify(user.to_dict()), 201
             )
         
         else:
             response = make_response(
-                {}, 404
+                {}, 401
             )
 
         return response
@@ -255,7 +266,7 @@ class Login(Resource):
 api.add_resource(Login, '/login')
 
 class Logout(Resource):
-    def logout():
+    def delete(self):
         session['user_id'] = None
 
         response = make_response(

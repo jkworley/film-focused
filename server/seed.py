@@ -43,6 +43,25 @@ if __name__ == '__main__':
         db.session.add_all(users)
         db.session.commit()
 
+        user_1_password = "abc"
+        user_2_password = "def"
+        user_3_password = "ghi"
+        user_4_password = "jkl"
+        user_5_password = "mno"
+
+        users[0].password_hash = user_1_password
+        users[1].password_hash = user_2_password
+        users[2].password_hash = user_3_password
+        users[3].password_hash = user_4_password
+        users[4].password_hash = user_5_password
+
+        db.session.add(users[0])
+        db.session.add(users[1])
+        db.session.add(users[2])
+        db.session.add(users[3])
+        db.session.add(users[4])
+        db.session.commit()
+
         movies = [
             Movie(
                 tmdb_id = 346698,
@@ -145,11 +164,92 @@ if __name__ == '__main__':
         db.session.add_all(slates)
         db.session.commit()
 
-        for i in range(25):
+        for i in range(10):
             slated_movie = SlatedMovie(
-                    slate_id = randint(1, 10),
+                    slate_id = 1,
                     movie_id = randint(1, 10),
-                    position_number = 0
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 2,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 3,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 4,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 5,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 6,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 7,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 8,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 9,
+                    movie_id = randint(1, 10),
+                    position_number = i
+                )
+            db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(10):
+            slated_movie = SlatedMovie(
+                    slate_id = 10,
+                    movie_id = randint(1, 10),
+                    position_number = i
                 )
             db.session.add(slated_movie)
             db.session.commit()

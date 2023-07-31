@@ -12,19 +12,23 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String)
-    _password = db.Column(db.String)
+    _password_hash = db.Column(db.String)
+
+    slates = db.relationship('Slate', backref = 'user')
+
+    serialize_rules = ('-slates.user', )
 
     @hybrid_property
-    def password(self):
+    def password_hash(self):
         raise Exception('Hashed password is private')
 
-    @password.setter
-    def password(self, password):
-        password = bcrypt.generate_password_hash(password.encode('utf-8'))
-        self._password = password.decode('utf-8')
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
 
     def authenticate(self, password):
-        return bcrypt.check_password_hash(self._password, password.encode('utf-8'))
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
 class Slate(db.Model, SerializerMixin):
     __tablename__ = 'slates'
@@ -37,7 +41,7 @@ class Slate(db.Model, SerializerMixin):
 
     slated_movies = db.relationship('SlatedMovie', cascade = 'all, delete', backref = 'slate')
 
-    serialize_rules = ('-slated_movies.slate', )
+    serialize_rules = ('-slated_movies.slate', '-user.slates')
 
 class SlatedMovie(db.Model, SerializerMixin):
     __tablename__ = 'slated_movies'
@@ -47,7 +51,9 @@ class SlatedMovie(db.Model, SerializerMixin):
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
     position_number = db.Column(db.Integer)
 
-    serialize_rules = ('-slate.slated_movies', )
+    movie_details = db.relationship('Movie', backref = 'slated_movie')
+
+    serialize_rules = ('-slate.slated_movies', '-movie_details.slated_movie')
 
 class Movie(db.Model, SerializerMixin):
     __tablename__ = 'movies'
@@ -56,4 +62,6 @@ class Movie(db.Model, SerializerMixin):
     tmdb_id = db.Column(db.Integer)
     title = db.Column(db.String)
     image = db.Column(db.String)
+
+    serialize_rules = ('-slated_movie.movie_details', )
     
