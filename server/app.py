@@ -248,7 +248,7 @@ class Login(Resource):
         password = request.get_json()['password']
 
         user = User.query.filter(User.username == username).first()
-
+        
         if user.authenticate(password):
             session['user_id'] = user.id
 
