@@ -24,19 +24,24 @@ if __name__ == '__main__':
 
         users = [
             User(
-                username = "boom_resolve"
+                username = "boom_resolve",
+                email = "boom_resolve@example.com"
             ),
             User(
-                username = "waffle_affair"
+                username = "waffle_affair",
+                email = "waffle_affair@example.com"
             ),
             User(
-                username = "itch_protection"
+                username = "itch_protection",
+                email = "itch_protection@example.com"
             ),
             User(
-                username = "beep_tone"
+                username = "beep_tone",
+                email = "beep_tone@example.com"
             ),
             User(
-                username = "groan_departure"
+                username = "groan_departure",
+                email = "groan_departure@example.com"
             )
         ]
 

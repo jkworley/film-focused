@@ -13,6 +13,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String)
     _password_hash = db.Column(db.String)
+    email = db.Column(db.String)
 
     slates = db.relationship('Slate', backref = 'user')
 
@@ -20,7 +21,7 @@ class User(db.Model, SerializerMixin):
 
     @hybrid_property
     def password_hash(self):
-        raise Exception('Hashed password is private')
+        return self._password_hash
 
     @password_hash.setter
     def password_hash(self, password):

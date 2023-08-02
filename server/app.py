@@ -1,10 +1,13 @@
 # Library imports
 from flask import jsonify, make_response, request, session
 from flask_restful import Resource
+from flask_bcrypt import Bcrypt
 
 # Local imports
 from config import app, db, api
 from models import User, Slate, SlatedMovie, Movie
+
+bcrypt = Bcrypt(app)
 
 class Index(Resource):
     def get(self):
@@ -14,11 +17,13 @@ api.add_resource(Index, '/')
 
 class Users(Resource):
     def post(self):
-        try:
-            request_json = request.get_json()
+        request_json = request.get_json()
 
-            new_user = Slate(
+        try:
+            new_user = User(
                 username = request_json['username'],
+                password_hash = request_json['password'],
+                email = request_json['email']
             )
 
             db.session.add(new_user)
@@ -123,16 +128,16 @@ class SlateById(Resource):
     
     def delete(self, id):
         slate_by_id = Slate.query.filter(Slate.id == id).first()
-
+        print(slate_by_id)
         db.session.delete(slate_by_id)
 
         db.session.commit()
 
         response = make_response(
-            { "Slate successfully deleted!" },
+            { "a": "Slate successfully deleted!" },
             200
         )
-
+        
         return response
 
 api.add_resource(SlateById, '/slates/<int:id>')

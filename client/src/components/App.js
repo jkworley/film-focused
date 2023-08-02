@@ -11,84 +11,124 @@ import UserProfile from "./UserProfile";
  
 
 function App() {
-  // USER STATE FOR LOGIN & CREATE ACCOUNT
-  const [ user, setUser ] = useState(null)
-  const [ formUsername, setFormUsername ] = useState("")
-  const [ formPassword, setFormPassword ] = useState("")
+    // SET API KEY
+    const api_key = process.env.REACT_APP_TMDB_API_KEY
 
-  const navigate = useNavigate()
+    // USER STATE FOR LOGIN & CREATE ACCOUNT
+    const [ user, setUser ] = useState(null)
+    const [ loginUsername, setLoginUsername ] = useState("")
+    const [ loginPassword, setLoginPassword ] = useState("")
+    const [ newAccountEmail, setNewAccountEmail ] = useState("")
+    const [ newAccountUsername, setNewAccountUsername ] = useState("")
+    const [ newAccountPassword, setNewAccountPassword ] = useState("")
 
-  // STATE FOR SLATES
-  const [ slates, setSlates ] = useState([])
+    console.log(newAccountEmail)
 
-  // CHECK SESSION
-  useEffect(() => {
-    fetch("/check_session").then((response) => {
-      if (response.ok) {
-        response.json().then((user) => setUser(user))
-      }
-    })
-   }, [])
+    const navigate = useNavigate()
 
-  // HANDLE LOGIN
-  function handleLogin(e) {
-    e.preventDefault()
+    // STATE FOR SLATES
+    const [ slates, setSlates ] = useState([])
+    const [ userSlates, setUserSlates ] = useState([])
 
-    let username = formUsername
-    let password = formPassword
-    
-    fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify( { username, password } ),
-      }).then((resp) => {
-        if (resp.ok) {
-          resp.json().then((user) => {
-            setUser(user)
-            console.log(user)
-          })
-        }
-      });
+    // CHECK SESSION
+    useEffect(() => {
+        fetch("/check_session").then((response) => {
+            if (response.ok) {
+                response.json().then((user) => setUser(user))
+            }
+        })
+    }, [])
 
-    setFormUsername("")
-    setFormPassword("")
-    navigate("/slates")
-  }
+    // HANDLE CREATE ACCOUNT
+    function handleCreateAccount(e) {
+        e.preventDefault()
 
-  const api_key = process.env.REACT_APP_TMDB_API_KEY
+        let email = newAccountEmail
+        let username = newAccountUsername
+        let password = newAccountPassword
 
-  console.log(api_key)
+        fetch("/users", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify( { username, password, email } ),
+        })
+        .then((resp) => {
+            if (resp.ok) {
+                resp.json().then((user) => {
+                    setUser(user)
+                    navigate("/profile")
+                })
+            }
+        })
 
-  // HANDLE LOGOUT
-  function handleLogout() {
-      fetch("/logout", {
-          method: "DELETE"
-      }).then(setUser(null))
-  }
+        setNewAccountEmail("")
+        setNewAccountUsername("")
+        setNewAccountPassword("")
+    }
 
-  // GET SLATES
-  useEffect(() => {
-    fetch("/slates")
-    .then(resp => resp.json())
-    .then(slate => setSlates(slate))
-  }, [])
+    // HANDLE LOGIN
+    function handleLogin(e) {
+        e.preventDefault()
 
-  return (
-    <div className="">
-      <Header handleLogout={handleLogout} user={user} />
-      <Routes >
-        <Route path = "/" element={<CreateAccount />} />
-        <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setFormUsername={setFormUsername} setFormPassword={setFormPassword} formUsername={formUsername} formPassword={formPassword} />} />
-        <Route path = "/slates" element={<Slates slates={slates} />} />
-        <Route path = "/create_slate" element={<CreateSlate api_key={api_key} />} />
-        <Route path = "user/:userId" element={<UserProfile />} />
-      </Routes>
-      {/* <Footer /> */}
-    </div>
+        let username = loginUsername
+        let password = loginPassword
+        
+        fetch("/login", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify( { username, password } ),
+        })
+        .then((resp) => {
+            if (resp.ok) {
+                resp.json().then((user) => {
+                    setUser(user)
+                    setUserSlates(user.slates)
+                    console.log(user.slates)
+                    navigate("/profile")
+                })
+            }
+        })
 
-  )
+        setLoginUsername("")
+        setLoginPassword("")
+    }
+
+    // HANDLE LOGOUT
+    function handleLogout() {
+        fetch("/logout", {
+            method: "DELETE"
+        })
+        .then(setUser(null))
+    } 
+
+    // GET SLATES
+    useEffect(() => {
+        fetch("/slates")
+        .then(resp => resp.json())
+        .then(slate => {
+            setSlates(slate)
+        })
+    }, [])
+
+    return (
+        <div className="">
+        <Header handleLogout={handleLogout} user={user} />
+        <Routes >
+            <Route path = "/" element={<CreateAccount handleCreateAccount={handleCreateAccount} newAccountEmail={newAccountEmail} newAccountUsername={newAccountUsername} newAccountPassword={newAccountPassword} setNewAccountEmail={setNewAccountEmail} setNewAccountUsername={setNewAccountUsername} setNewAccountPassword={setNewAccountPassword} />} />
+            <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setLoginUsername={setLoginUsername} setLoginPassword={setLoginPassword} loginUsername={loginUsername} loginPassword={loginPassword} />} />
+            <Route path = "/slates" element={<Slates slates={slates} />} />
+            <Route path = "/create_slate" element={<CreateSlate api_key={api_key} />} />
+            <Route path = "/profile" element={<UserProfile user={user} user_slates={userSlates} />} />
+        </Routes>
+        {/* <Footer /> */}
+        </div>
+    )
 }
 
 export default App;

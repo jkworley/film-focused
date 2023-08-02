@@ -13,14 +13,14 @@ function Header({ user, handleLogout }) {
                         <span className="text-3xl uppercase text-sky-700">Film Focused</span>
                     </div>
                 </NavLink>
-                <nav className="text-white uppercase md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <ul className="text-white uppercase md:ml-auto flex flex-wrap items-center text-base justify-center">
                     {/* <a className="mr-5 hover:text-sky-300"><NavLink to="/login">Sign In</NavLink></a> */}
-                    <a className="mr-5 hover:text-sky-300">{!user ? "" : ""}</a>
-                    <a className="mr-5 hover:text-sky-300"><NavLink to="/">Create Account</NavLink></a>
-                    <a className="mr-5 hover:text-sky-300"><NavLink to="/slates">Slates</NavLink></a>
-                    <a className="mr-5 hover:text-sky-300">{!user ? <NavLink to="/login">My Account</NavLink> : <NavLink to="/user/">My Account</NavLink>}</a>
+                    <li className="mr-5 hover:text-sky-300">{!user ? "" : ""}</li>
+                    <li className="mr-5 hover:text-sky-300"><NavLink to="/">Create Account</NavLink></li>
+                    <li className="mr-5 hover:text-sky-300"><NavLink to="/slates">Slates</NavLink></li>
+                    <li className="mr-5 hover:text-sky-300">{!user ? <NavLink to="/login">My Account</NavLink> : <NavLink to="/profile">My Account</NavLink>}</li>
                     <button onClick={!user ? handleLogout : handleLogout} className="uppercase bg-sky-700 border-0 py-1 px-3 focus:outline-none hover:bg-sky-800 rounded text-base">{!user ? <NavLink to="/login">Sign In</NavLink> : "Sign Out"}</button>
-                </nav>
+                </ul>
             </div>
         </header>
     )
