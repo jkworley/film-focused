@@ -12,7 +12,9 @@ function Slates({ slates }) {
     )
     
     return (
-        <>{renderSlatePreviews}</>
+        <div className="">
+            {renderSlatePreviews}
+        </div>
     )
 }
 

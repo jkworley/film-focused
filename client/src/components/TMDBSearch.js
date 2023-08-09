@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TMDBSearchResult from "./TMDBSearchResult";
 
-function TMDBSearch({ api_key }) {
+function TMDBSearch({ api_key, handleSlateMovie }) {
     const [ seachTerm, setSearchTerm ] = useState("")
     const [ searchResults, setSearchResults ] = useState([])
     const [ pageNumber, setPageNumber ] = useState(1)
@@ -15,23 +15,16 @@ function TMDBSearch({ api_key }) {
         }
       };
       
-    console.log(options.headers.Authorization)
-
     function handleTMDBSearchByTitle(e) {
         e.preventDefault()
         
-        console.log(e.target.searchByTitleInput.value)
-        
         let page_number = pageNumber
-        
-        console.log(`https://api.themoviedb.org/3/search/movie?query=${e.target.searchByTitleInput.value}&page=${page_number}`)
-        
+                
         fetch(`https://api.themoviedb.org/3/search/movie?query=${e.target.searchByTitleInput.value}&page=${page_number}`, options)
             .then(response => response.json())
             .then(response => {
                 setSearchResults(response.results)
                 setTotalPages(response.total_pages)
-                console.log(response)
             })
             .catch(err => console.error(err));
         
@@ -52,29 +45,29 @@ function TMDBSearch({ api_key }) {
         setPageNumber(value)
     }
 
-    console.log(searchResults)
-
     const renderMovies = searchResults?.map((result) => 
         <TMDBSearchResult 
+            api_key = {api_key}
             key = {result.id}
             id = {result.id}
             title = {result.title}
             poster_path = {result.poster_path}
             release_date = {result.release_date}
+            handleSlateMovie = {handleSlateMovie}
         />
     )
     
     return (
-        <div className="h-auto w-auto">
+        <div className="h-auto w-auto mt-10">
             <div className="container h-auto mx-auto flex justify-center p-2 md:p-0">
-                <div className="border p-6 grid grid-cols-1 gap-6 bg-white shadow-lg rounded-lg">
+                <div className="grid grid-cols-1 gap-6 rounded-lg content-end">
                     <form onSubmit={handleTMDBSearchByTitle}>
-                        <input type="text" placeholder="Enter text here..." className="bg-gray-300 max-w-full p-2 focus:outline-none text-gray-700" name="searchByTitleInput" required/>
-                        <button type="submit" style={{ fontFamily: 'Viga-Regular' }} className="w-auto uppercase p-2 border rounded-md bg-sky-700 text-white">Search</button>
+                        <input type="text" placeholder="Enter text here..." className="bg-gray-300 max-w-full p-2 rounded focus:outline-none text-gray-700 text-sm mr-2" name="searchByTitleInput" required/>
+                        <button type="submit" style={{ fontFamily: 'Viga-Regular' }} className="w-auto uppercase p-2 rounded-md bg-sky-700 text-white text-sm">Search</button>
                     </form>
                 </div>
             </div>
-            <div className="w-auto p-10 grid grid-cols-5 gap-8">
+            <div className="w-auto p-5 grid grid-cols-5 gap-4">
                 {renderMovies}
             </div>
             <div style={{ fontFamily: 'Viga-Regular' }} className={totalPages > 1 ? "flex justify-center" : "hidden"}>  

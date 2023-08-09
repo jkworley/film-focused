@@ -13,16 +13,18 @@ function UserSlates({ slate, title, id, created, handleDelete }) {
 
     return(
         <div className="mb-5">
-        <div className="bg-neutral-700/50 p-8 flex justify-between">
-            <div className="w-5/6">
-                <p style={{ fontFamily: 'Viga-Regular' }} className="uppercase">{title}</p>
-                <p className="text-xs">{created}</p>
+            <div className="bg-neutral-700/50 p-4 flex justify-between">
+                <div className="w-5/6">
+                    <p style={{ fontFamily: 'Viga-Regular' }} className="uppercase">{title}</p>
+                    <p className="text-xs">{created}</p>
+                </div>
+                <button id={id} onClick={() => handleDelete(id)} style={{ fontFamily: 'Viga-Regular' }} className="bg-red-700 uppercase border-0 py-1 px-2 focus:outline-none hover:bg-red-800 rounded text-xs">Delete</button>
             </div>
-            <button id={id} onClick={() => handleDelete(id)} style={{ fontFamily: 'Viga-Regular' }} className="bg-red-700 uppercase border-0 py-1 px-2 focus:outline-none hover:bg-red-800 rounded text-xs">Delete</button>
-        </div>
-        <div className="grid grid-cols-5 mr-[74px] md:grid-cols-10">
-            {renderSlatePreviewMovies}
-        </div>
+            <div className="flex flex-wrap md:flex-wrap justify-center">
+                <div className="grid grid-cols-5 md:grid-cols-10">
+                    {renderSlatePreviewMovies}
+                </div>
+            </div>
         </div>
     )
 }

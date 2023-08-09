@@ -39,7 +39,7 @@ class Users(Resource):
         
         except ValueError:
             response = make_response(
-                'Failed to create new user',
+                {'message': 'Failed to create new user'},
                 400
             )
 
@@ -66,7 +66,7 @@ class UsersById(Resource):
         db.session.commit()
 
         response = make_response(
-            { "Account has been deleted!" },
+            {'message': 'Account has been deleted!' },
             200
         )
 
@@ -107,7 +107,7 @@ class Slates(Resource):
         
         except ValueError:
             response = make_response(
-                'Failed to create new slate',
+                {'message': 'Failed to create new slate'},
                 400
             )
 
@@ -128,13 +128,13 @@ class SlateById(Resource):
     
     def delete(self, id):
         slate_by_id = Slate.query.filter(Slate.id == id).first()
-        print(slate_by_id)
+        
         db.session.delete(slate_by_id)
 
         db.session.commit()
 
         response = make_response(
-            { "a": "Slate successfully deleted!" },
+            { 'message': 'Slate successfully deleted!' },
             200
         )
         
@@ -159,7 +159,7 @@ class SlatedMovies(Resource):
 
             new_slated_movie = SlatedMovie(
                 slate_id = request_json['slate_id'],
-                movie_id = request_json['slate_title'],
+                movie_id = request_json['movie_id'],
                 position_number = request_json['position_number']
             )
 
@@ -176,7 +176,7 @@ class SlatedMovies(Resource):
         
         except ValueError:
             response = make_response(
-                'Failed to create new slated movies',
+                {'message': 'Failed to create new slated movies'},
                 400
             )
 
@@ -218,7 +218,7 @@ class Movies(Resource):
         
         except ValueError:
             response = make_response(
-                'Failed to create new movie',
+                {'message': 'Failed to create new movie'},
                 400
             )
 
@@ -228,10 +228,10 @@ api.add_resource(Movies, '/movies')
 
 class CheckSession(Resource):
     def get(self):
-        current_session = session.get('user.id')
-
+        current_session = session.get('user_id')
+        
         if current_session:
-            user_row = User.query.filter(User.id == current_session.id).first()
+            user_row = User.query.filter(User.id == current_session).first()
 
             response = make_response(
                 jsonify(user_row.to_dict(), 200)
@@ -255,6 +255,7 @@ class Login(Resource):
         user = User.query.filter(User.username == username).first()
         
         if user.authenticate(password):
+
             session['user_id'] = user.id
 
             response = make_response(
@@ -263,7 +264,7 @@ class Login(Resource):
         
         else:
             response = make_response(
-                {}, 401
+                { }, 401
             )
 
         return response

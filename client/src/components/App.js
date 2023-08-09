@@ -5,24 +5,20 @@ import Footer from "./Footer";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import Slates from "./Slates";
-import TMDBSearch from "./TMDBSearch";
 import CreateSlate from "./CreateSlate";
 import UserProfile from "./UserProfile";
  
-
 function App() {
     // SET API KEY
     const api_key = process.env.REACT_APP_TMDB_API_KEY
 
     // USER STATE FOR LOGIN & CREATE ACCOUNT
-    const [ user, setUser ] = useState(null)
+    const [ user, setUser ] = useState({})
     const [ loginUsername, setLoginUsername ] = useState("")
     const [ loginPassword, setLoginPassword ] = useState("")
     const [ newAccountEmail, setNewAccountEmail ] = useState("")
     const [ newAccountUsername, setNewAccountUsername ] = useState("")
     const [ newAccountPassword, setNewAccountPassword ] = useState("")
-
-    console.log(newAccountEmail)
 
     const navigate = useNavigate()
 
@@ -32,13 +28,18 @@ function App() {
 
     // CHECK SESSION
     useEffect(() => {
-        fetch("/check_session").then((response) => {
+        fetch("/check_session")
+        .then((response) => {
             if (response.ok) {
-                response.json().then((user) => setUser(user))
+                response.json()
+                .then((user) => {
+                    setUser(user[0])
+                    setUserSlates(user[0].slates)
+                })
             }
         })
     }, [])
-
+    
     // HANDLE CREATE ACCOUNT
     function handleCreateAccount(e) {
         e.preventDefault()
@@ -57,7 +58,8 @@ function App() {
         })
         .then((resp) => {
             if (resp.ok) {
-                resp.json().then((user) => {
+                resp.json()
+                .then((user) => {
                     setUser(user)
                     navigate("/profile")
                 })
@@ -89,7 +91,6 @@ function App() {
                 resp.json().then((user) => {
                     setUser(user)
                     setUserSlates(user.slates)
-                    console.log(user.slates)
                     navigate("/profile")
                 })
             }
@@ -119,12 +120,12 @@ function App() {
     return (
         <div className="">
         <Header handleLogout={handleLogout} user={user} />
-        <Routes >
+        <Routes>
             <Route path = "/" element={<CreateAccount handleCreateAccount={handleCreateAccount} newAccountEmail={newAccountEmail} newAccountUsername={newAccountUsername} newAccountPassword={newAccountPassword} setNewAccountEmail={setNewAccountEmail} setNewAccountUsername={setNewAccountUsername} setNewAccountPassword={setNewAccountPassword} />} />
             <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setLoginUsername={setLoginUsername} setLoginPassword={setLoginPassword} loginUsername={loginUsername} loginPassword={loginPassword} />} />
             <Route path = "/slates" element={<Slates slates={slates} />} />
-            <Route path = "/create_slate" element={<CreateSlate api_key={api_key} />} />
-            <Route path = "/profile" element={<UserProfile user={user} user_slates={userSlates} />} />
+            <Route path = "/create_slate" element={<CreateSlate api_key={api_key} user={user}/>} />
+            <Route path = "/profile" element={<UserProfile user={user} setUser={setUser} user_slates={userSlates} setUserSlates={setUserSlates}/>} />
         </Routes>
         {/* <Footer /> */}
         </div>
