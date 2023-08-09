@@ -4,8 +4,10 @@ import UserSlates from "./UserSlates";
 
 function UserProfile({ user, setUser, user_slates, setUserSlates }) {
     
+    // NAVIGATION
     const navigate = useNavigate()
 
+    // HANDLE DELETE SLATE & RERENDER
     function handleDelete(id) {
         fetch(`/slates/${id}`, {
             method: "DELETE"
@@ -27,6 +29,7 @@ function UserProfile({ user, setUser, user_slates, setUserSlates }) {
         />
     )
 
+    // RERENDER SLATES ON DELETE CHECKS SESSION AND RESETS STATE
     function reRenderUserSlates() {
         fetch("/check_session")
         .then((response) => {

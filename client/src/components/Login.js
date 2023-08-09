@@ -7,7 +7,6 @@ function Login({ user, handleLogin, setLoginUsername, setLoginPassword, loginUse
             <section className="text-white body-font">
                 <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
                     <form onSubmit={handleLogin} className="lg:w-2/6 md:w-1/2 bg-gray-200 rounded-lg p-8 flex flex-col md:mx-auto w-full mt-10 md:mt-0">
-                        {/* <h2 class="text-gray-700 text-xl font-semibold title-font mb-5">Log In</h2> */}
                         <div className="relative mb-4">
                             <label htmlFor="username" className="leading-7 text-sm text-gray-600">Username</label>
                             <input onChange={e => setLoginUsername(e.target.value)} value={loginUsername} type="text" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />

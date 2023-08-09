@@ -3,20 +3,27 @@ import TMDBMovieDetails from "./TMDBMovieDetails";
 import { useState } from "react";
 
 function TMDBSearchResult({ api_key, id, title, poster_path, release_date, handleSlateMovie }) {
-    const [ showModal, setShowModal ] = useState(false)
+
+    // SET STATE FOR SELECTED MOVIE DETAILS/CREDITS
     const [ movieDetails, setMovieDetails ] = useState({})
     const [ movieCredits, setMovieCredits ] = useState({})
 
+    // SET STATE FOR MODAL TOGGLE
+    const [ showModal, setShowModal ] = useState(false)
+
+    // FUNCTIONS TO TOGGLE MODAL
     function handleOpenModal() {
         setShowModal(true)
     }
 
     function handleCloseModal() {
         setShowModal(false)
-    }    
+    }
 
+    // REMOVE YEAR FROM DATE FORMAT AND SET AS VARIABLE
     const release_year = release_date.slice(0, 4)
 
+    // HEADER OPTIONS FOR TMDB GET REQUEST
     const options = {
         method: 'GET',
         headers: {
@@ -24,7 +31,8 @@ function TMDBSearchResult({ api_key, id, title, poster_path, release_date, handl
           Authorization: api_key
         }
     }
-      
+    
+    // TMDB SEARCH BY ID FOR MOVIE DETIALS/CREDITS & OPEN MODAL
     function handleTMDBSearchById(e) {
         e.preventDefault()
         console.log(e.target.id)      

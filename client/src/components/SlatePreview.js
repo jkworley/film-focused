@@ -1,6 +1,7 @@
 import SlatePreviewMovies from "./SlatePreviewMovies";
 
 function SlatePreview({ slate, title, created_by }) {
+    
     const renderSlatePreviewMovies = slate.slated_movies.map((movie) => 
         <SlatePreviewMovies 
             key = {movie.position_number}

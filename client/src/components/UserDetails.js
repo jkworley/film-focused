@@ -2,8 +2,11 @@ import { useState } from "react";
 import ReactModal from "react-modal";
 
 function UserDetails({ user }) {
+
+    // SET STATE FOR UPDATE INFORMANTION MODAL
     const [ showModal, setShowModal ] = useState(false)
 
+    // FUNCTIONS TO TOGGLE MODAL
     function handleOpenModal() {
         setShowModal(true)
     }

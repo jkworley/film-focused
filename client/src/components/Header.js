@@ -1,9 +1,9 @@
-// Images
 import { NavLink } from "react-router-dom";
+
+// IMPORTED LOGO IMAGE
 import icon from "../assets/icon.png";
 
 function Header({ user, handleLogout }) {
-
     return (
         <header style={{ fontFamily: 'Viga-Regular' }} className="pt-4 px-8 body-font">
             <div className="container mx-auto max-w-screen-lg flex flex-wrap p-2 flex-col md:flex-row items-center">

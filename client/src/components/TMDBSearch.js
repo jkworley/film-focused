@@ -2,19 +2,23 @@ import { useState } from "react";
 import TMDBSearchResult from "./TMDBSearchResult";
 
 function TMDBSearch({ api_key, handleSlateMovie }) {
+
+    // SETTING STATE FOR TMDB SEARCH AND PAGINATION
     const [ seachTerm, setSearchTerm ] = useState("")
     const [ searchResults, setSearchResults ] = useState([])
     const [ pageNumber, setPageNumber ] = useState(1)
     const [ totalPages, setTotalPages ] = useState(0)
 
+    // HEADER OPTIONS FOR TMDB GET REQUEST
     const options = {
         method: 'GET',
         headers: {
           accept: 'application/json',
           Authorization: api_key
         }
-      };
-      
+    }
+    
+    // TMDB SEARCH BY TITLE
     function handleTMDBSearchByTitle(e) {
         e.preventDefault()
         
@@ -31,6 +35,7 @@ function TMDBSearch({ api_key, handleSlateMovie }) {
         setSearchTerm(e.target.searchByTitleInput.value)
     }
 
+    // TMDB SEARCH BY TITLE FOR ADDITIONAL PAGES OF RESULTS
     function handleChangePage(value) {
         console.log(`https://api.themoviedb.org/3/search/movie?query=${seachTerm}&page=${value}`)
         

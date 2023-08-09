@@ -12,6 +12,9 @@ function App() {
     // SET API KEY
     const api_key = process.env.REACT_APP_TMDB_API_KEY
 
+    // NAVIGATION
+    const navigate = useNavigate()
+
     // USER STATE FOR LOGIN & CREATE ACCOUNT
     const [ user, setUser ] = useState({})
     const [ loginUsername, setLoginUsername ] = useState("")
@@ -19,8 +22,6 @@ function App() {
     const [ newAccountEmail, setNewAccountEmail ] = useState("")
     const [ newAccountUsername, setNewAccountUsername ] = useState("")
     const [ newAccountPassword, setNewAccountPassword ] = useState("")
-
-    const navigate = useNavigate()
 
     // STATE FOR SLATES
     const [ slates, setSlates ] = useState([])
@@ -119,15 +120,15 @@ function App() {
 
     return (
         <div className="">
-        <Header handleLogout={handleLogout} user={user} />
-        <Routes>
-            <Route path = "/" element={<CreateAccount handleCreateAccount={handleCreateAccount} newAccountEmail={newAccountEmail} newAccountUsername={newAccountUsername} newAccountPassword={newAccountPassword} setNewAccountEmail={setNewAccountEmail} setNewAccountUsername={setNewAccountUsername} setNewAccountPassword={setNewAccountPassword} />} />
-            <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setLoginUsername={setLoginUsername} setLoginPassword={setLoginPassword} loginUsername={loginUsername} loginPassword={loginPassword} />} />
-            <Route path = "/slates" element={<Slates slates={slates} />} />
-            <Route path = "/create_slate" element={<CreateSlate api_key={api_key} user={user}/>} />
-            <Route path = "/profile" element={<UserProfile user={user} setUser={setUser} user_slates={userSlates} setUserSlates={setUserSlates}/>} />
-        </Routes>
-        {/* <Footer /> */}
+            <Header handleLogout={handleLogout} user={user} />
+            <Routes>
+                <Route path = "/" element={<CreateAccount handleCreateAccount={handleCreateAccount} newAccountEmail={newAccountEmail} newAccountUsername={newAccountUsername} newAccountPassword={newAccountPassword} setNewAccountEmail={setNewAccountEmail} setNewAccountUsername={setNewAccountUsername} setNewAccountPassword={setNewAccountPassword} />} />
+                <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setLoginUsername={setLoginUsername} setLoginPassword={setLoginPassword} loginUsername={loginUsername} loginPassword={loginPassword} />} />
+                <Route path = "/slates" element={<Slates slates={slates} />} />
+                <Route path = "/create_slate" element={<CreateSlate api_key={api_key} user={user}/>} />
+                <Route path = "/profile" element={<UserProfile user={user} setUser={setUser} user_slates={userSlates} setUserSlates={setUserSlates}/>} />
+            </Routes>
+            {/* <Footer /> */}
         </div>
     )
 }

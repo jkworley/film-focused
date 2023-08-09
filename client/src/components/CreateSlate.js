@@ -2,9 +2,13 @@ import { useState } from "react";
 import TMDBSearch from "./TMDBSearch";
 
 function CreateSlate({ api_key, user }) {
+
+    // SET STATE FOR NEW SLATE TITLE AND MOVIES
     const [ slatedMovies, setSlatedMovies ] = useState([])
     const [ slateTitle, setSlateTitle ] = useState("")
 
+    // HANDLE ADD MOVIE TO ARRAY FOR NEW SLATE
+    // EVENT BUTTON LOCATED IN TMDB MOVIE DETAILS
     function handleSlateMovie(e, movie_details) {        
         let new_movie = {
             "key": movie_details.tmdb_id,
@@ -13,6 +17,7 @@ function CreateSlate({ api_key, user }) {
             "tmdb_id": movie_details.id,
         }
         
+        // SLATE LENGTH LIMITED TO 10 MOVIES
         if (slatedMovies.length < 10) {
             setSlatedMovies([...slatedMovies, new_movie])
         } else {
@@ -20,20 +25,23 @@ function CreateSlate({ api_key, user }) {
         }
     }
 
+    // HANDLE REMOVE MOVIE FROM ARRAY FOR NEW SLATE
     function handleRemove(e) {
         let updated_slate = slatedMovies.filter((movie) => movie.tmdb_id != e.target.id)
 
         setSlatedMovies(updated_slate)
     }
 
+    // RENDER MOVIES ADDED TO ARRAY FOR NEW SLATE
     const renderSlatedMovies = slatedMovies?.map((movie) => 
         <div className="flex flex-col p-1">
             <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.image}`} className="w-20"></img>
-            {/* <p className="text-xs p-2 flex-grow">{movie.title}</p> */}
             <button id={movie.tmdb_id} onClick={(e) => handleRemove(e)} style={{ fontFamily: 'Viga-Regular' }} className="text-white bg-red-700 uppercase border-0 h-4 mt-2 px-1 focus:outline-none hover:bg-red-800 rounded text-xs">Remove</button>
         </div>
     )
 
+    // HANDLE CREATE NEW SLATE
+    // POST REQUEST TO BACKEND SENDS NESTED POST TO ADD MOVIE
     function handleCreateSlate(e) {
         e.preventDefault()
 
@@ -56,6 +64,9 @@ function CreateSlate({ api_key, user }) {
         })
     }
 
+    // HANDLE ADD MOVIE TO DATABASE
+    // POST REQUEST CALLED FROM CREATE SLATE
+    // NESTED FUNCTION POSTS SLATE/MOVIE RELATIONSHIPS
     function addMovie(new_slate_id) {
         slatedMovies.forEach((movie) => {
             fetch("/movies", {
@@ -73,6 +84,8 @@ function CreateSlate({ api_key, user }) {
         })
     }
 
+    // HANDLE CREATE MOVIE/SLATE RELATIONSHIP
+    // POST REQUEST CALLED FROM ADD MOVIE
     function slateMovie(new_slate_id, new_movie_id, movie_position) {
         let movie_to_slate = {
             slate_id: new_slate_id,

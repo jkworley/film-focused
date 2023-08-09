@@ -3,13 +3,13 @@ import SlatePreviewMovies from "./SlatePreviewMovies";
 function UserSlates({ slate, title, id, created, handleDelete }) {
     
     const renderSlatePreviewMovies = slate.slated_movies.map((movie) => 
-    
-    <SlatePreviewMovies 
-        key = {movie.position_number}
-        title = {movie.movie_details.title}
-        image = {movie.movie_details.image}
-        position = {movie.position_number}
-    />)
+        <SlatePreviewMovies 
+            key = {movie.position_number}
+            title = {movie.movie_details.title}
+            image = {movie.movie_details.image}
+            position = {movie.position_number}
+        />
+    )
 
     return(
         <div className="mb-5">

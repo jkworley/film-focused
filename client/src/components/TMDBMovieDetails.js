@@ -48,6 +48,7 @@ function TMDBMovieDetails({ close_modal, movie_details, movie_credits, handleSla
         <p className="text-xs bg-neutral-900/75 rounded p-1 m-1">{writer.name}</p>
     )
 
+    // FUNCTION TO HANDLE ADDING MOVIE TO SLATE AND CLOSING MODAL
     function slateMovie(e, movie_details) {
         handleSlateMovie(e, movie_details)
         close_modal()
