@@ -11,12 +11,16 @@ function UserSlates({ slate, title, id, created, handleDelete }) {
         />
     )
 
+    const convert_to_date = new Date(`${created}`)
+
+    const display_date = convert_to_date.toDateString()
+
     return(
         <div className="mb-5">
             <div className="bg-neutral-700/50 p-4 flex justify-between">
                 <div className="w-5/6">
                     <p style={{ fontFamily: 'Viga-Regular' }} className="uppercase">{title}</p>
-                    <p className="text-xs">{created}</p>
+                    <p className="text-xs">{display_date}</p>
                 </div>
                 <button id={id} onClick={() => handleDelete(id)} style={{ fontFamily: 'Viga-Regular' }} className="bg-red-700 uppercase border-0 py-1 px-2 focus:outline-none hover:bg-red-800 rounded text-xs">Delete</button>
             </div>

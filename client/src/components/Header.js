@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import icon from "../assets/icon.png";
 
 function Header({ user, handleLogout }) {
+
     return (
         <header style={{ fontFamily: 'Viga-Regular' }} className="pt-4 px-8 body-font">
             <div className="container mx-auto max-w-screen-lg flex flex-wrap p-2 flex-col md:flex-row items-center">
@@ -14,12 +15,10 @@ function Header({ user, handleLogout }) {
                     </div>
                 </NavLink>
                 <ul className="text-white uppercase md:ml-auto flex flex-wrap items-center text-base justify-center">
-                    {/* <a className="mr-5 hover:text-sky-300"><NavLink to="/login">Sign In</NavLink></a> */}
-                    <li className="mr-5 hover:text-sky-300">{!user ? "" : ""}</li>
-                    <li className="mr-5 hover:text-sky-300"><NavLink to="/">Create Account</NavLink></li>
-                    <li className="mr-5 hover:text-sky-300"><NavLink to="/slates">Slates</NavLink></li>
-                    <li className="mr-5 hover:text-sky-300">{!user ? <NavLink to="/login">My Account</NavLink> : <NavLink to="/profile">My Account</NavLink>}</li>
-                    <button onClick={!user ? handleLogout : handleLogout} className="uppercase bg-sky-700 border-0 py-1 px-3 focus:outline-none hover:bg-sky-800 rounded text-base">{!user ? <NavLink to="/login">Sign In</NavLink> : "Sign Out"}</button>
+                    <div className="hover:text-sky-300 mr-4">{user ? <NavLink to="/create_slate">Create Slate</NavLink> : <></>}</div>
+                    <div className="hover:text-sky-300 mr-4"><NavLink to="/slates">Slates</NavLink></div>
+                    <div className="hover:text-sky-300 mr-4">{!user ? <NavLink to="/">Create Account</NavLink> : <NavLink to="/profile">My Account</NavLink>}</div>
+                    <div>{!user ? <button className="uppercase bg-sky-700 border-0 py-1 px-3 focus:outline-none hover:bg-sky-800 rounded text-base"><NavLink to="/login">Sign In</NavLink></button> : <button onClick={handleLogout} className="uppercase bg-sky-700 border-0 py-1 px-3 focus:outline-none hover:bg-sky-800 rounded text-base">Sign Out</button>}</div>
                 </ul>
             </div>
         </header>

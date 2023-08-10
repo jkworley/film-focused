@@ -1,10 +1,14 @@
 import { useState } from "react";
 import ReactModal from "react-modal";
 
-function UserDetails({ user }) {
+function UserDetails({ user, setUser }) {
 
     // SET STATE FOR UPDATE INFORMANTION MODAL
     const [ showModal, setShowModal ] = useState(false)
+    const [ updateAccountEmail, setUpdateAccountEmail ] = useState("")
+    const [ updateAccountUsername, setUpdateAccountUsername ] = useState("")
+    const [ updateAccountPassword, setUpdateAccountPassword ] = useState("")
+
 
     // FUNCTIONS TO TOGGLE MODAL
     function handleOpenModal() {
@@ -13,7 +17,38 @@ function UserDetails({ user }) {
 
     function handleCloseModal() {
         setShowModal(false)
-    }    
+    }
+
+    function handleAccountUpdate(e) {
+        e.preventDefault()
+
+        let email = updateAccountEmail
+        let username = updateAccountUsername
+        let password = updateAccountPassword
+
+        fetch("/users", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify( { username, password, email } ),
+        })
+        .then((resp) => {
+            if (resp.ok) {
+                resp.json()
+                .then((user) => {
+                    setUser(user)
+                })
+            }
+        })
+
+        setUpdateAccountEmail("")
+        setUpdateAccountUsername("")
+        setUpdateAccountPassword("")
+
+        handleCloseModal()
+    }
 
     if (user) {
     return (
@@ -40,19 +75,19 @@ function UserDetails({ user }) {
             </div>
             <ReactModal isOpen={showModal} ariaHideApp={false} className="modal" overlayClassName="overlay">
                 <div className="lg:w-2/6 md:w-1/2 bg-gray-200 rounded-lg p-8 flex flex-col md:mx-auto w-full mt-10">
-                    <form >
+                    <form onSubmit={handleAccountUpdate}>
                         <h2 class="text-gray-700 text-xl font-semibold title-font mb-5">Update Information</h2>
                         <div className="relative mb-4">
                             <label htmlFor="username" className="leading-7 text-sm text-gray-600">Username</label>
-                            <input type="text" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
+                            <input onChange={e => setUpdateAccountUsername(e.target.value)} value={updateAccountUsername} type="text" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
                         </div>
                         <div className="relative mb-4">
                             <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-                            <input type="text" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
+                            <input onChange={e => setUpdateAccountEmail(e.target.value)} value={updateAccountEmail} type="text" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
                         </div>
                         <div className="relative mb-4">
                             <label htmlFor="password" className="leading-7 text-sm text-gray-600">Password</label>
-                            <input type="password" id="password" name="password" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
+                            <input onChange={e => setUpdateAccountPassword(e.target.value)} value={updateAccountPassword} type="password" id="password" name="password" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-sky-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
                         </div>
                         <div className="flex justify-between">
                             <button onClick={handleCloseModal} style={{ fontFamily: 'Viga-Regular' }} className="text-white bg-red-700 uppercase border-0 py-2 px-8 focus:outline-none hover:bg-red-800 rounded text-lg">Cancel</button>

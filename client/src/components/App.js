@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+// IMPORTS
+import React, { createContext, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+
+
+// COMPONENTS
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
@@ -7,6 +11,9 @@ import CreateAccount from "./CreateAccount";
 import Slates from "./Slates";
 import CreateSlate from "./CreateSlate";
 import UserProfile from "./UserProfile";
+
+// CONTEXT
+export const Context = createContext()
  
 function App() {
     // SET API KEY
@@ -107,6 +114,8 @@ function App() {
             method: "DELETE"
         })
         .then(setUser(null))
+
+        navigate("/")
     } 
 
     // GET SLATES
@@ -119,16 +128,22 @@ function App() {
     }, [])
 
     return (
-        <div className="">
-            <Header handleLogout={handleLogout} user={user} />
-            <Routes>
-                <Route path = "/" element={<CreateAccount handleCreateAccount={handleCreateAccount} newAccountEmail={newAccountEmail} newAccountUsername={newAccountUsername} newAccountPassword={newAccountPassword} setNewAccountEmail={setNewAccountEmail} setNewAccountUsername={setNewAccountUsername} setNewAccountPassword={setNewAccountPassword} />} />
-                <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setLoginUsername={setLoginUsername} setLoginPassword={setLoginPassword} loginUsername={loginUsername} loginPassword={loginPassword} />} />
-                <Route path = "/slates" element={<Slates slates={slates} />} />
-                <Route path = "/create_slate" element={<CreateSlate api_key={api_key} user={user}/>} />
-                <Route path = "/profile" element={<UserProfile user={user} setUser={setUser} user_slates={userSlates} setUserSlates={setUserSlates}/>} />
-            </Routes>
-            {/* <Footer /> */}
+        <div className="min-h-screen relative flex flex-col">
+            <div className="pb-20">
+                <Header handleLogout={handleLogout} user={user} />
+                <Routes>
+                    <Route path = "/" element={<CreateAccount handleCreateAccount={handleCreateAccount} newAccountEmail={newAccountEmail} newAccountUsername={newAccountUsername} newAccountPassword={newAccountPassword} setNewAccountEmail={setNewAccountEmail} setNewAccountUsername={setNewAccountUsername} setNewAccountPassword={setNewAccountPassword} />} />
+                    <Route path = "/login" element={<Login user={user} handleLogin={handleLogin} setLoginUsername={setLoginUsername} setLoginPassword={setLoginPassword} loginUsername={loginUsername} loginPassword={loginPassword} />} />
+                    <Route path = "/slates" element={<Slates slates={slates} />} />
+                    <Route path = "/create_slate" element={<CreateSlate api_key={api_key} user={user}/>} />
+                    <Route path = "/profile" element={<UserProfile user={user} setUser={setUser} userSlates={userSlates} setUserSlates={setUserSlates} setSlates={setSlates}/>} />
+                </Routes>
+            </div>
+            <div className="bg-sky-800 h-20 absolute w-full bottom-0">
+                <Context.Provider value={"This product uses the TMDB API but is not endorsed or certified by TMDB."}>
+                    <Footer />
+                </Context.Provider>
+            </div>
         </div>
     )
 }

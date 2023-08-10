@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TMDBSearch from "./TMDBSearch";
 
 function CreateSlate({ api_key, user }) {
+
+    // NAVIGATION
+    const navigate = useNavigate()
 
     // SET STATE FOR NEW SLATE TITLE AND MOVIES
     const [ slatedMovies, setSlatedMovies ] = useState([])
@@ -62,6 +66,8 @@ function CreateSlate({ api_key, user }) {
         .then(resp => {
             addMovie(resp.id)
         })
+
+        navigate("/profile")
     }
 
     // HANDLE ADD MOVIE TO DATABASE
@@ -107,7 +113,7 @@ function CreateSlate({ api_key, user }) {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="w-full bg-neutral-500/50 p-5 flex flex-col items-center">
+            <div className="h-60 w-full bg-neutral-500/25 p-5 flex flex-col items-center">
                 <div className="mb-4">
                     <div>
                         <form onSubmit={e => handleCreateSlate(e)}>

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 function Login({ user, handleLogin, setLoginUsername, setLoginPassword, loginUsername, loginPassword }) {
 
     return (
-        <div className="h-screen mx-auto max-w-screen-lg">
+        <div className="mx-auto max-w-screen-lg">
             <section className="text-white body-font">
                 <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
                     <form onSubmit={handleLogin} className="lg:w-2/6 md:w-1/2 bg-gray-200 rounded-lg p-8 flex flex-col md:mx-auto w-full mt-10 md:mt-0">
