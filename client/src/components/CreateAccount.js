@@ -35,12 +35,12 @@ function CreateAccount({ handleCreateAccount, newAccountEmail, newAccountUsernam
             <section className="body-font">
                 <div className="">
                     <div className="create-account-bg">
-                        <div className="container lg:px-20 md:px-14 py-14 mx-auto flex flex-wrap items-center">
+                        <div className="container lg:px-20 md:px-14 py-14 mx-auto flex flex-wrap">
                             <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-                                <h1 className="drop-shadow-2xl shadow-black font-bold text-3xl text-white">Create curated lists of your favorite movies</h1>
-                                <p className="drop-shadow-2xl shadow-black mt-4">Film Focusd lets you create lists of movies that you love, movies that you want to watch, or movies that follow a theme.</p>
+                                <h1 className="drop-shadow-2xl shadow-black font-bold text-3xl text-white">Create curated lists <br/>of your favorite movies</h1>
+                                <p className="drop-shadow-2xl shadow-black mt-4">Film Focusd lets you create lists of movies that you love, <br/>movies that you want to watch, or movies that follow a theme.</p>
                             </div>
-                            <form onSubmit={handleCreateAccount} className="lg:w-2/6 md:w-1/2 bg-gray-200 rounded-lg p-8 flex flex-col md:ml-auto w-full md:mt-0">
+                            <form onSubmit={handleCreateAccount} className="lg:w-2/5 md:w-1/2 bg-gray-200 rounded-lg p-8 flex flex-col md:ml-auto w-full md:mt-0">
                                 <div className="relative mb-4">
                                     <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
                                     <input onChange={e => setNewAccountEmail(e.target.value)} value={newAccountEmail} type="text" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-sky-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
