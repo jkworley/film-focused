@@ -30,6 +30,12 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+    
+    @validates('username')
+    def validates_quantity(self, key, username):
+        if not isinstance(username, str) and len(username) > 5:
+            raise ValueError('Username must be 6 or more characters')
+        return username
 
 class Slate(db.Model, SerializerMixin):
     __tablename__ = 'slates'

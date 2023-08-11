@@ -64,7 +64,7 @@ function TMDBSearch({ api_key, handleSlateMovie }) {
     
     return (
         <div className="h-auto w-auto mt-5">
-            <p className="mb-5 flex justify-center">Search the Movie Database (TMDB) to add films to a new slate</p>
+            <p className="mb-5 flex justify-center">Search the Movie Database (TMDB) by title to add films to a new slate</p>
             <div className="container h-auto mx-auto flex justify-center p-2 md:p-0">
                 <div className="grid grid-cols-1 gap-6 rounded-lg content-end">
                     <form onSubmit={handleTMDBSearchByTitle}>
