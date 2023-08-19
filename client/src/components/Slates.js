@@ -32,7 +32,7 @@ function Slates({ slates }) {
         <div>
             <div className="flex justify-center">
                 <form onSubmit={handleSearch}>
-                    <input onChange={e => setSearchTerm(e.target.value)} value={seachTerm} type="text" placeholder="Enter text here..." className="bg-gray-300 max-w-full p-2 rounded focus:outline-none text-gray-700 text-sm mr-2" name="searchByTitleInput" required/>
+                    <input onChange={e => setSearchTerm(e.target.value)} value={seachTerm} type="text" placeholder="Search slates..." className="bg-gray-300 w-80 p-2 rounded focus:outline-none text-gray-700 text-sm mr-2" name="searchByTitleInput" required/>
                     <button type="submit" style={{ fontFamily: 'Viga-Regular' }} className="w-auto uppercase p-2 rounded-md bg-sky-700 text-white text-sm">Search Slates</button>
                 </form>
             </div>

@@ -17,7 +17,9 @@ class User(db.Model, SerializerMixin):
 
     slates = db.relationship('Slate', backref = 'user')
 
-    serialize_rules = ('-slates.user', )
+    comments = db.relationship('Comment', backref = 'user')
+
+    serialize_rules = ('-slates.user', '-comments.user')
 
     @hybrid_property
     def password_hash(self):
@@ -43,6 +45,7 @@ class Slate(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     created_by = db.Column(db.String, db.ForeignKey('users.username'))
     slate_title = db.Column(db.String)
+    description = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at =db.Column(db.DateTime, onupdate = db.func.now())
 
@@ -72,3 +75,13 @@ class Movie(db.Model, SerializerMixin):
 
     serialize_rules = ('-slated_movie.movie_details', )
     
+class Comment(db.Model, SerializerMixin):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key = True)
+    slate_id = db.Column(db.Integer, db.ForeignKey('slates.id'))
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comment = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    updated_at =db.Column(db.DateTime, onupdate = db.func.now())
+

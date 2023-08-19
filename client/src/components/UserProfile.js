@@ -3,19 +3,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import UserDetails from "./UserDetails";
 import UserSlates from "./UserSlates";
 
-function UserProfile({ user, setUser, userSlates, setUserSlates, setSlates }) {
+function UserProfile({ user, setUser, userSlates, setUserSlates }) {
     
     // NAVIGATION
     const navigate = useNavigate()
 
     // GET SLATES
     useEffect(() => {
-        fetch("/slates")
-        .then(resp => resp.json())
-        .then(slate => {
-            setSlates(slate)
-        })
-
         fetch("/check_session")
         .then((response) => {
             if (response.ok) {

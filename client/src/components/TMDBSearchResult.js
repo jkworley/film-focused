@@ -35,7 +35,7 @@ function TMDBSearchResult({ api_key, id, title, poster_path, release_date, handl
     // TMDB SEARCH BY ID FOR MOVIE DETIALS/CREDITS & OPEN MODAL
     function handleTMDBSearchById(e) {
         e.preventDefault()
-        console.log(e.target.id)      
+
         fetch(`https://api.themoviedb.org/3/movie/${e.target.id}`, options)
             .then(response => response.json())
             .then(response => setMovieDetails(response))
@@ -58,7 +58,7 @@ function TMDBSearchResult({ api_key, id, title, poster_path, release_date, handl
                 <img id={id} onClick={handleTMDBSearchById} src={poster_path ? `https://image.tmdb.org/t/p/w600_and_h900_bestv2${poster_path}` : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"} className={poster_path ? "hover:cursor-pointer" : "cursor-pointer opacity-50 border border-neutral-500"}/>
             </div>
             <ReactModal isOpen={showModal} ariaHideApp={false} className="modal" overlayClassName="overlay">
-                <TMDBMovieDetails close_modal={handleCloseModal} movie_details={movieDetails} movie_credits={movieCredits} handleSlateMovie={handleSlateMovie}/>
+                <TMDBMovieDetails handleCloseModal={handleCloseModal} movieDetails={movieDetails} movieCredits={movieCredits} handleSlateMovie={handleSlateMovie}/>
             </ReactModal>
         </div>
     )

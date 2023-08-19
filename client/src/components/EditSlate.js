@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import TMDBSearch from "./TMDBSearch";
 import ReactModal from "react-modal";
+import SlatedMovies from "./SlatedMovies";
 
-function CreateSlate({ api_key, user }) {
+function EditSlate({ api_key, user }) {
+
+    const params = useParams();
 
     // NAVIGATION
     const navigate = useNavigate()
@@ -12,6 +15,7 @@ function CreateSlate({ api_key, user }) {
     const [ slatedMovies, setSlatedMovies ] = useState([])
     const [ slateTitle, setSlateTitle ] = useState("")
     const [ slateDescription, setSlateDescription ] = useState("")
+    const [ removedItems, setRemovedItems ] = useState([])
 
     // SET STATE FOR MODAL TOGGLE
     const [ showModal, setShowModal ] = useState(false)
@@ -24,17 +28,27 @@ function CreateSlate({ api_key, user }) {
     function handleCloseModal() {
         setShowModal(false)
     }
-    
+
+    useEffect(()=>{
+        fetch(`/slates/${params.slateId}`)
+            .then(resp=> resp.json())
+            .then(slate => {
+                setSlatedMovies(slate.slated_movies)
+                setSlateTitle(slate.slate_title)
+                setSlateDescription(slate.description)
+            })
+    }, [])
+
     // HANDLE ADD MOVIE TO ARRAY FOR NEW SLATE
     // EVENT BUTTON LOCATED IN TMDB MOVIE DETAILS
-    function handleSlateMovie(e, movieDetails) {
-
+    function handleSlateMovie(id, movieDetails, poster_path) {  
         let new_movie = {
-            "key": movieDetails.id,
-            "image": `https://image.tmdb.org/t/p/w600_and_h900_bestv2${movieDetails.poster_path}`,
+            "key": id,
+            "image": `https://image.tmdb.org/t/p/w600_and_h900_bestv2${poster_path}`,
             "title": movieDetails.title,
-            "tmdb_id": movieDetails.id,
+            "tmdb_id": id,
         }
+        console.log(new_movie)      
         
         if (slatedMovies.length === 0) {
             setSlatedMovies([...slatedMovies, new_movie])
@@ -57,17 +71,24 @@ function CreateSlate({ api_key, user }) {
 
     // HANDLE REMOVE MOVIE FROM ARRAY FOR NEW SLATE
     function handleRemove(e) {
-        let updated_slate = slatedMovies.filter((movie) => movie.tmdb_id != e.target.id)
+        const removed_item = slatedMovies?.filter((movie) => movie.movie_details.tmdb_id == e.target.id)
 
+        removed_item.map((item) => 
+            setRemovedItems([...removedItems, item])
+        )
+        
+        let updated_slate = slatedMovies?.filter((movie) => movie.movie_details.tmdb_id != e.target.id)
+        
         setSlatedMovies(updated_slate)
     }
 
     // RENDER MOVIES ADDED TO ARRAY FOR NEW SLATE
     const renderSlatedMovies = slatedMovies?.map((movie) => 
-        <div className="flex flex-col p-1">
-            <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.image}`} alt={`${movie.title} poster`} className="w-20 shadow-md shadow-neutral-700"></img>
-            <button id={movie.tmdb_id} onClick={(e) => handleRemove(e)} style={{ fontFamily: 'Viga-Regular' }} className="shadow-md shadow-neutral-700 text-white bg-red-700 uppercase border-0 h-4 mt-2 px-1 focus:outline-none hover:bg-red-800 rounded text-xs">Remove</button>
-        </div>
+        <SlatedMovies 
+            key={movie.id} 
+            movie={movie} 
+            handleRemove={handleRemove}
+        />
     )
 
     // HANDLE CREATE NEW SLATE
@@ -75,58 +96,74 @@ function CreateSlate({ api_key, user }) {
     function handleCreateSlate(e) {
         e.preventDefault()
 
-        let new_slate = {
+        removedItems.forEach((item) =>
+            fetch(`/slated_movies/${item.id}`, {
+                method: "DELETE"
+            })
+            .then(resp => resp.json())
+            .then(resp => console.log(resp))
+        )
+
+        let updated_slate = {
             created_by: user.username,
             slate_title: slateTitle,
             description: slateDescription
         }
 
-        fetch("/slates", {
-            method: "POST",
+        fetch(`/slates/${params.slateId}`, {
+            method: "PUT",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(new_slate)
+            body: JSON.stringify(updated_slate)
         })
         .then(resp => resp.json())
         .then(resp => {
+            addMovie()
             console.log(resp)
-            addMovie(resp.id)
         })
 
         handleCloseModal()
-        navigate(`/profile`)
+        navigate(`/slates/${params.slateId}`)
     }
-
+    
     // HANDLE ADD MOVIE TO DATABASE
     // POST REQUEST CALLED FROM CREATE SLATE
     // NESTED FUNCTION POSTS SLATE/MOVIE RELATIONSHIPS
-    function addMovie(new_slate_id) {
-        slatedMovies.forEach((movie) => {
+    function addMovie() {
+        slatedMovies?.forEach((movie) => {
+            let new_movie = {
+                image: movie.movie_details.image,
+                title: movie.movie_details.title,
+                tmdb_id: movie.movie_details.tmdb_id
+            }
+
             fetch("/movies", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(movie)
+                body: JSON.stringify(new_movie)
             })
             .then(resp => resp.json())
             .then(resp => {
-                slateMovie(new_slate_id, resp.id, slatedMovies.findIndex(movie_to_index => movie_to_index.title == `${movie.title}`))
+                slateMovie(params.slateId, resp.id, slatedMovies.findIndex(movie_to_index => movie_to_index.movie_details.title == `${new_movie.title}`))
             })
         })
     }
 
     // HANDLE CREATE MOVIE/SLATE RELATIONSHIP
     // POST REQUEST CALLED FROM ADD MOVIE
-    function slateMovie(new_slate_id, new_movie_id, movie_position) {
+    function slateMovie(updated_slate_id, new_movie_id, movie_position) {
         let movie_to_slate = {
-            slate_id: new_slate_id,
+            slate_id: updated_slate_id,
             movie_id: new_movie_id,
             position_number: movie_position
         }
+
+        console.log(movie_to_slate)
 
         fetch("/slated_movies", {
             method: "POST",
@@ -147,7 +184,7 @@ function CreateSlate({ api_key, user }) {
                     {slatedMovies.length == 0 ? <p className="text-neutral-400 mb-5 flex justify-center">Search the Movie Database (TMDB) by title to add films to a new slate</p> : renderSlatedMovies}
                 </div>
                 <div className="w-full flex justify-end">
-                    {slatedMovies.length > 0 ? <button onClick={handleOpenModal} style={{ fontFamily: 'Viga-Regular' }} className="w-auto uppercase p-2 mt-4 rounded-md bg-sky-700 text-white text-sm">Create Slate</button> : <></>}
+                    {slatedMovies.length > 0 ? <button onClick={handleOpenModal} style={{ fontFamily: 'Viga-Regular' }} className="w-auto uppercase p-2 mt-4 rounded-md bg-sky-700 text-white text-sm">Update Slate</button> : <></>}
                 </div>
             </div>
             <div className="w-3/4">
@@ -160,7 +197,7 @@ function CreateSlate({ api_key, user }) {
                 </div>
                 <form onSubmit={e => handleCreateSlate(e)}>
                     <div className="p-5 flex flex-col items-center">
-                        <div className="grid grid-flow-col auto-cols-max">
+                        <div className="grid grid-flow-col auto-cols-max gap-2">
                             {renderSlatedMovies}
                         </div>  
                     </div>
@@ -171,11 +208,11 @@ function CreateSlate({ api_key, user }) {
                         </div>
                         <div className="flex flex-col w-2/5 mx-4">
                         <label htmlFor="email" className="text-sm mb-1">Slate Description</label>        
-                        <textarea onChange={e => setSlateDescription(e.target.value)} value={slateDescription} id="comment" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:outline-none rounded-lg border-none" placeholder="Write a description here..."></textarea>
+                        <textarea onChange={e => setSlateDescription(e.target.value)} value={slateDescription} id="comment" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:outline-none rounded-lg border-none" placeholder="Write a description here..."></textarea>
                         </div>
                     </div>
                     <div className="flex justify-end">
-                        <button type="submit" style={{ fontFamily: 'Viga-Regular' }} className="uppercase p-2 rounded-md bg-sky-700 text-white text-sm">Create Slate</button>
+                        <button type="submit" style={{ fontFamily: 'Viga-Regular' }} className="uppercase p-2 rounded-md bg-sky-700 text-white text-sm">Update Slate</button>
                     </div>
                 </form>
             </div>
@@ -184,4 +221,4 @@ function CreateSlate({ api_key, user }) {
     )
 }
 
-export default CreateSlate;
+export default EditSlate;

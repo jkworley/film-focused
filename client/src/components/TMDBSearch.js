@@ -64,11 +64,10 @@ function TMDBSearch({ api_key, handleSlateMovie }) {
     
     return (
         <div className="h-auto w-auto mt-5">
-            <p className="mb-5 flex justify-center">Search the Movie Database (TMDB) by title to add films to a new slate</p>
             <div className="container h-auto mx-auto flex justify-center p-2 md:p-0">
                 <div className="grid grid-cols-1 gap-6 rounded-lg content-end">
                     <form onSubmit={handleTMDBSearchByTitle}>
-                        <input type="text" placeholder="Enter text here..." className="bg-gray-300 max-w-full p-2 rounded focus:outline-none text-gray-700 text-sm mr-2" name="searchByTitleInput" required/>
+                        <input type="text" placeholder="TMDB search..." className="bg-gray-50 p-2 w-60 rounded focus:outline-none text-gray-700 text-sm mr-2" name="searchByTitleInput" required/>
                         <button type="submit" style={{ fontFamily: 'Viga-Regular' }} className="w-auto uppercase p-2 rounded-md bg-sky-700 text-white text-sm">Search</button>
                     </form>
                 </div>

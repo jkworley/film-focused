@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Slate, SlatedMovie, Movie
+from models import db, User, Slate, SlatedMovie, Movie, Comment
 
 if __name__ == '__main__':
     
@@ -21,6 +21,7 @@ if __name__ == '__main__':
         Slate.query.delete()
         SlatedMovie.query.delete()
         Movie.query.delete()
+        Comment.query.delete()
 
         users = [
             User(
@@ -126,43 +127,53 @@ if __name__ == '__main__':
         slates = [
             Slate(
                 created_by = "boom_resolve",
-                slate_title = "Slate #1"
+                slate_title = "Slate #1",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "boom_resolve",
-                slate_title = "Slate #2"
+                slate_title = "Slate #2",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "waffle_affair",
-                slate_title = "Slate #3"
+                slate_title = "Slate #3",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "waffle_affair",
-                slate_title = "Slate #4"
+                slate_title = "Slate #4",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "itch_protection",
-                slate_title = "Slate #5"
+                slate_title = "Slate #5",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "itch_protection",
-                slate_title = "Slate #6"
+                slate_title = "Slate #6",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "beep_tone",
-                slate_title = "Slate #7"
+                slate_title = "Slate #7",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "beep_tone",
-                slate_title = "Slate #8"
+                slate_title = "Slate #8",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "groan_departure",
-                slate_title = "Slate #9"
+                slate_title = "Slate #9",
+                description = fake.paragraph(nb_sentences=5)
             ),
             Slate(
                 created_by = "groan_departure",
-                slate_title = "Slate #10"
+                slate_title = "Slate #10",
+                description = fake.paragraph(nb_sentences=5)
             )
         ]
 
@@ -172,7 +183,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 1,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -181,7 +192,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 2,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -190,7 +201,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 3,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -199,7 +210,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 4,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -208,7 +219,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 5,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -217,7 +228,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 6,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -226,7 +237,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 7,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -235,7 +246,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 8,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -244,7 +255,7 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 9,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
@@ -253,8 +264,17 @@ if __name__ == '__main__':
         for i in range(10):
             slated_movie = SlatedMovie(
                     slate_id = 10,
-                    movie_id = randint(1, 10),
+                    movie_id = i + 1,
                     position_number = i
                 )
             db.session.add(slated_movie)
+            db.session.commit()
+
+        for i in range(50):
+            comment = Comment(
+                    slate_id = randint(1, 10),
+                    created_by = randint(1, 5),
+                    comment = fake.paragraph(nb_sentences=5)
+                )
+            db.session.add(comment)
             db.session.commit()

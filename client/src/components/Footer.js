@@ -8,9 +8,9 @@ function Footer() {
 
     return (
         <footer className="">
-            <div className="mx-auto max-w-screen-lg flex justify-between">
+            <div className="mx-auto max-w-screen-lg flex justify-center">
                 <nav className="m-8 font-semibold text-white text-sm">
-                    <ul className="flex ml-10">
+                    <ul className="flex">
                         {/* <li>About</li> */}
                     </ul>
                 </nav>

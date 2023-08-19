@@ -9,8 +9,10 @@ import Footer from "./Footer";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import Slates from "./Slates";
+import SlateDetails from "./SlateDetails";
 import CreateSlate from "./CreateSlate";
 import UserProfile from "./UserProfile";
+import EditSlate from "./EditSlate";
 
 // CONTEXT
 export const Context = createContext()
@@ -33,6 +35,9 @@ function App() {
     // STATE FOR SLATES
     const [ slates, setSlates ] = useState([])
     const [ userSlates, setUserSlates ] = useState([])
+
+    // STATE FOR COMMENTS
+    const [ comments, setComments ] = useState([])
 
     // CHECK SESSION
     useEffect(() => {
@@ -127,6 +132,15 @@ function App() {
         })
     }, [])
 
+    // GET COMMENTS
+    useEffect(() => {
+        fetch("/comments")
+        .then(resp => resp.json())
+        .then(comment => {
+            setComments(comment)
+        })
+    }, [])
+
     return (
         <div className="min-h-screen relative flex flex-col">
             <div className="pb-20">
@@ -137,6 +151,8 @@ function App() {
                     <Route path = "/slates" element={<Slates slates={slates} />} />
                     <Route path = "/create_slate" element={<CreateSlate api_key={api_key} user={user}/>} />
                     <Route path = "/profile" element={<UserProfile user={user} setUser={setUser} userSlates={userSlates} setUserSlates={setUserSlates} setSlates={setSlates}/>} />
+                    <Route path = "/slates/:slateId" element={<SlateDetails user={user} comments={comments}/>} />
+                    {/* <Route path = "/slates/:slateId/edit" element={<EditSlate user={user} comments={comments}/>} /> */}
                 </Routes>
             </div>
             <div className="bg-sky-800 h-20 absolute w-full bottom-0">

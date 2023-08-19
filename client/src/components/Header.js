@@ -14,7 +14,7 @@ function Header({ user, handleLogout }) {
                         <span className="text-3xl uppercase text-sky-700">Film Focused</span>
                     </div>
                 </NavLink>
-                <ul className="text-white uppercase md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <ul className="uppercase md:ml-auto flex flex-wrap items-center text-base justify-center">
                     <div className="hover:text-sky-300 mr-4">{user ? <NavLink to="/create_slate">Create Slate</NavLink> : <></>}</div>
                     <div className="hover:text-sky-300 mr-4"><NavLink to="/slates">Slates</NavLink></div>
                     <div className="hover:text-sky-300 mr-4">{!user ? <NavLink to="/">Create Account</NavLink> : <NavLink to="/profile">My Account</NavLink>}</div>
