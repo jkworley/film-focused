@@ -101,7 +101,7 @@ Currently, the Movie Database key is not published here. You can connect by crea
 - `server/`: Server-side code (Flask)
 - `client/`: Client-side code (React)
 - `models.py`: Database models
-- `routes.py`: API routes
+- `app.py`: API routes
 
 ## License
 
